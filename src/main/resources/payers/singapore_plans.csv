@@ -1,0 +1,4 @@
+ID,Payer_ID,Name,Type,Deductible,Quaternary_Deductible,Co_Payment,Annual_Limit
+FW_PLAN,FWMI_001,Foreign Worker Enhanced,Mandatory,0,0,0.25,60000
+RES_PLAN,GOV_001,MediShield Life Base,Government,1500,3500,0.10,150000
+IP_PLAN,IP_001,Integrated Shield Plan A,Private,3500,3500,0.05,2000000

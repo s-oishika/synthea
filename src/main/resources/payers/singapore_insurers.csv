@@ -1,0 +1,5 @@
+Payer_ID,Name,Address,City,State,Zip,Phone,Amount_Covered,Amount_Uncovered
+FWMI_001,Income Insurance (WorkMedic),75 Bras Basah Rd,Singapore,SG,189557,63321133,0,0
+IP_001,AIA HealthShield Gold Max,1 Robinson Rd,Singapore,SG,048542,18002488000,0,0
+IP_002,Great Eastern SupremeHealth,1 Pickering St,Singapore,SG,048659,18002482888,0,0
+GOV_001,MediShield Life,CPF Board,Singapore,SG,048503,18002223333,0,0
