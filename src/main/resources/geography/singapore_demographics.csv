@@ -1,7 +1,8 @@
 City,State,Country,FIPS,Property,Value
-Singapore,Singapore,Singapore,000,Asian,0.741
-Singapore,Singapore,Singapore,000,Black,0.135
-Singapore,Singapore,Singapore,000,Other,0.124
-Singapore,Singapore,Singapore,000,Hispanic,0.020
+Singapore,Massachusetts,Singapore,000,Asian,0.741
+Singapore,Massachusetts,Singapore,000,Black,0.135
+Singapore,Massachusetts,Singapore,000,Other,0.124
+Singapore,Massachusetts,Singapore,000,Hispanic,0.020
 
-Singapore,Singapore,Singapore,000,White,0.000
+Singapore,Massachusetts,Singapore,000,White,0.000
+
