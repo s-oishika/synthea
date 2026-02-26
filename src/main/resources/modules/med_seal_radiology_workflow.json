@@ -1,0 +1,53 @@
+{
+  "name": "Med_SEAL_Radiology_Workflow",
+  "remarks": [
+    "Simulates a radiology workflow with potential handover delays for MED-SEAL training."
+  ],
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Clinic_Visit"
+    },
+    "Clinic_Visit": {
+      "type": "Encounter",
+      "encounter_class": "ambulatory",
+      "reason": "Chest_Pain",
+      "direct_transition": "Order_XRay"
+    },
+    "Order_XRay": {
+      "type": "Procedure",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "168537006",
+          "display": "Plain chest X-ray"
+        }
+      ],
+      "direct_transition": "Wait_For_Radiologist"
+    },
+    "Wait_For_Radiologist": {
+      "type": "Delay",
+      "range": {
+        "low": 60,
+        "high": 300,
+        "unit": "minutes"
+      },
+      "direct_transition": "Generate_Report"
+    },
+    "Generate_Report": {
+      "type": "DiagnosticReport",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "18748-4",
+          "display": "Diagnostic imaging report"
+        }
+      ],
+      "direct_transition": "Terminal"
+    },
+    "Terminal": {
+      "type": "Terminal"
+    }
+  },
+  "gmf_version": 2
+}
