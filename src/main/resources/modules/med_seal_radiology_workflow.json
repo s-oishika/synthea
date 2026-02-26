@@ -43,6 +43,57 @@
           "display": "Diagnostic imaging report"
         }
       ],
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "total_cost",
+            "operator": "<",
+            "value": 15000
+          },
+          "transition": "Full_Insurance_Coverage"
+        },
+        {
+          "condition": {
+            "condition_type": "And",
+            "conditions": [
+              {
+                "condition_type": "Attribute",
+                "attribute": "total_cost",
+                "operator": ">=",
+                "value": 15000
+              },
+              {
+                "condition_type": "Attribute",
+                "attribute": "total_cost",
+                "operator": "<=",
+                "value": 60000
+              }
+            ]
+          },
+          "transition": "Trigger_Employer_CoPay"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "total_cost",
+            "operator": ">",
+            "value": 60000
+          },
+          "transition": "Flag_Limit_Exceeded"
+        }
+      ]
+    },
+    "Full_Insurance_Coverage": {
+      "type": "Simple",
+      "direct_transition": "Terminal"
+    },
+    "Trigger_Employer_CoPay": {
+      "type": "Simple",
+      "direct_transition": "Terminal"
+    },
+    "Flag_Limit_Exceeded": {
+      "type": "Simple",
       "direct_transition": "Terminal"
     },
     "Terminal": {
