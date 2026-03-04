@@ -1,5 +1,6 @@
 {
   "name": "Med-SEAL Radiology Workflow",
+  "gmf_version": 2,
   "states": {
     "Initial": {
       "type": "Initial",
@@ -18,13 +19,10 @@
       "direct_transition": "Imaging_Needed_Logic"
     },
     "Imaging_Needed_Logic": {
-      "type": "Simple",
-      "complex_transition": [
+      "type": "Conditional",
+      "transitions": [
         {
-          "condition": {
-            "condition_type": "Probability",
-            "probability": 0.7
-          },
+          "probability": 0.7,
           "transition": "Place_Radiology_Order_EHR"
         },
         {
@@ -47,13 +45,10 @@
       "direct_transition": "Urgent_Logic"
     },
     "Urgent_Logic": {
-      "type": "Simple",
-      "complex_transition": [
+      "type": "Conditional",
+      "transitions": [
         {
-          "condition": {
-            "condition_type": "Probability",
-            "probability": 0.2
-          },
+          "probability": 0.2,
           "transition": "Perform_Scan"
         },
         {
@@ -161,6 +156,5 @@
     "Follow_Up_With_Doctor": {
       "type": "Terminal"
     }
-  },
-  "gmf_version": 2
+  }
 }
