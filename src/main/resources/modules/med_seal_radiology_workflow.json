@@ -1,9 +1,5 @@
 {
   "name": "Med-SEAL Radiology Workflow",
-  "remarks": [
-    "Generated based on the Outpatient Diagram workflow.",
-    "Includes Referring Doctor assessment, Admin scheduling, and Radiologist reporting."
-  ],
   "states": {
     "Initial": {
       "type": "Initial",
@@ -12,7 +8,6 @@
     "Clinical_Assessment": {
       "type": "Encounter",
       "encounter_class": "outpatient",
-      "reason": "Consultation",
       "codes": [
         {
           "system": "SNOMED-CT",
@@ -23,8 +18,8 @@
       "direct_transition": "Imaging_Needed_Logic"
     },
     "Imaging_Needed_Logic": {
-      "type": "Decision",
-      "transitions": [
+      "type": "Simple",
+      "complex_transition": [
         {
           "condition": {
             "condition_type": "Probability",
@@ -52,8 +47,8 @@
       "direct_transition": "Urgent_Logic"
     },
     "Urgent_Logic": {
-      "type": "Decision",
-      "transitions": [
+      "type": "Simple",
+      "complex_transition": [
         {
           "condition": {
             "condition_type": "Probability",
