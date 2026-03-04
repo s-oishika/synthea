@@ -1,0 +1,171 @@
+{
+  "name": "Med-SEAL Radiology Workflow",
+  "remarks": [
+    "Generated based on the Outpatient Diagram workflow.",
+    "Includes Referring Doctor assessment, Admin scheduling, and Radiologist reporting."
+  ],
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Clinical_Assessment"
+    },
+    "Clinical_Assessment": {
+      "type": "Encounter",
+      "encounter_class": "outpatient",
+      "reason": "Consultation",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "185345009",
+          "display": "Encounter for symptom"
+        }
+      ],
+      "direct_transition": "Imaging_Needed_Logic"
+    },
+    "Imaging_Needed_Logic": {
+      "type": "Decision",
+      "transitions": [
+        {
+          "condition": {
+            "condition_type": "Probability",
+            "probability": 0.7
+          },
+          "transition": "Place_Radiology_Order_EHR"
+        },
+        {
+          "transition": "Continue_Clinical_Management"
+        }
+      ]
+    },
+    "Continue_Clinical_Management": {
+      "type": "Terminal"
+    },
+    "Place_Radiology_Order_EHR": {
+      "type": "Procedure",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "312851000",
+          "display": "Referral to radiology service"
+        }
+      ],
+      "direct_transition": "Urgent_Logic"
+    },
+    "Urgent_Logic": {
+      "type": "Decision",
+      "transitions": [
+        {
+          "condition": {
+            "condition_type": "Probability",
+            "probability": 0.2
+          },
+          "transition": "Perform_Scan"
+        },
+        {
+          "transition": "Schedule_Next_Available"
+        }
+      ]
+    },
+    "Schedule_Next_Available": {
+      "type": "Delay",
+      "exact": {
+        "quantity": 7,
+        "unit": "days"
+      },
+      "direct_transition": "Perform_Scan"
+    },
+    "Perform_Scan": {
+      "type": "Encounter",
+      "encounter_class": "outpatient",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "168537006",
+          "display": "Radiology procedure"
+        }
+      ],
+      "direct_transition": "Upload_to_PACS"
+    },
+    "Upload_to_PACS": {
+      "type": "ImagingStudy",
+      "procedure_code": {
+        "system": "SNOMED-CT",
+        "code": "71651007",
+        "display": "Mammography"
+      },
+      "series": [
+        {
+          "body_site": {
+            "system": "SNOMED-CT",
+            "code": "76752008",
+            "display": "Breast structure"
+          },
+          "modality": {
+            "system": "DICOM-DCM",
+            "code": "MG",
+            "display": "Mammography"
+          },
+          "instances": [
+            {
+              "sop_class": {
+                "system": "DICOM-SOP",
+                "code": "1.2.840.10008.5.1.4.1.1.1.2",
+                "display": "Digital Mammography X-Ray Image Storage - For Presentation"
+              }
+            }
+          ]
+        }
+      ],
+      "direct_transition": "Radiologist_Interpretation"
+    },
+    "Radiologist_Interpretation": {
+      "type": "Delay",
+      "range": {
+        "low": 1,
+        "high": 4,
+        "unit": "hours"
+      },
+      "direct_transition": "Issue_Preliminary_Report"
+    },
+    "Issue_Preliminary_Report": {
+      "type": "DiagnosticReport",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "18748-4",
+          "display": "Diagnostic imaging report"
+        }
+      ],
+      "direct_transition": "Finalize_and_Sign_Report"
+    },
+    "Finalize_and_Sign_Report": {
+      "type": "Delay",
+      "range": {
+        "low": 1,
+        "high": 2,
+        "unit": "days"
+      },
+      "direct_transition": "Report_Keyed_into_EHR"
+    },
+    "Report_Keyed_into_EHR": {
+      "type": "Simple",
+      "direct_transition": "Review_Radiology_Report"
+    },
+    "Review_Radiology_Report": {
+      "type": "Encounter",
+      "encounter_class": "outpatient",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "390906007",
+          "display": "Follow-up encounter"
+        }
+      ],
+      "direct_transition": "Follow_Up_With_Doctor"
+    },
+    "Follow_Up_With_Doctor": {
+      "type": "Terminal"
+    }
+  },
+  "gmf_version": 2
+}
